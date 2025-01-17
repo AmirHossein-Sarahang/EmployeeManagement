@@ -1,11 +1,12 @@
 import { useState} from "react";
+import {useNavigate} from "react-router-dom";
 import users from "../../constant/user.json"
 import LoginForm from "./LoginForm";
 
 const Login = () => {
     const [username, setusername] = useState('')
     const [password, setpassword] = useState('')
-
+    const navigate = useNavigate()
     const handleEmailInput = (e:React.ChangeEvent<HTMLInputElement>) => {
         setusername(e.target.value)
     }
@@ -17,7 +18,11 @@ const Login = () => {
         const existuser = users.filter((user)=>(
            (user.username === username || user.email === username ) && user.password === password)
         )
-        console.log(existuser);
+        if(existuser.length > 0){
+            setTimeout(()=>{
+                navigate("/Dashboard")
+            },1500)
+        }
 
     }
     const isSubmitDisabled = () => {
